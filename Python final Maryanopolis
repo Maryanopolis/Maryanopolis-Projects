@@ -1,0 +1,73 @@
+
+import turtle
+import random
+screen = turtle.Screen()
+screen.bgcolor("Black")
+screen.title("Physics in action!")
+
+#adding multiple balls
+balls = []
+for _ in range(3):
+	balls.append(turtle.Turtle())
+
+#ball shape and color
+
+pretty_colors = ["red", "purple", "yellow", "blue"]
+
+
+for ball in balls:
+	ball.shape("circle")
+	ball.color(random.choice(pretty_colors))
+	ball.penup()
+	ball.speed(0)
+	x = random.randint(-275,275)
+	y = random.randint(250,300)
+	ball.goto(x,y)
+	ball.dy = 0
+	ball.dx = random.randint(-4,4)
+	ball.angle = 2
+
+#physics!
+
+gravity = 0.1
+
+#collisons 
+while True:
+
+
+	
+
+	for ball in balls:
+	  ball.setx(ball.xcor() + ball.dx)
+	  
+	  ball.rt(ball.angle)
+	  ball.dy -= gravity 
+	  ball.sety(ball.ycor() + ball.dy) 
+	  #Check for wall hit
+	  if ball.xcor() > 300:
+	  	ball.dx *= -1 
+	  if ball.xcor() < -300:
+	  	ball.dx *= -1 
+	  if ball.ycor() < - 300:
+	    ball.dy *= -1
+
+	for k in range(0, len(balls)):
+		for l in range(k + 1, len(balls)):
+			if balls[k].distance(balls[l]) < 20:
+				temp_dx = balls[k].dx
+				temp_dy = balls[k].dy
+
+				balls[k].dx = balls[l].dx
+				balls[k].dy = balls[l].dy
+
+				balls[l].dx = temp_dx
+				balls[l].dy = temp_dy
+
+
+
+
+
+
+
+
+screen.mainloop()
